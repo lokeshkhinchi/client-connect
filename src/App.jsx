@@ -8,6 +8,9 @@ import Order from "./Pages/Order"
 import NoMatch from "./Pages/NoMatch"
 import LogIn from "./Pages/LogIn"
 import './App.css'
+import FollowUpDetail from './Pages/FollowUpDetail';
+import Test from './Pages/Test';
+import { CafeDetail } from './Pages/CafeDetail';
 
 function App() {
 
@@ -18,12 +21,11 @@ function App() {
           <Route index element={<Home />} />
           <Route path="onboarding" element={<Onboarding />} />
           <Route path="follow-up" element={<FollowUp />} />
+          <Route path="follow-up/:cafeId" element={<FollowUpDetail />} />
+          <Route path="cafe/:cafeId" element={<CafeDetail />} />
           <Route path="order" element={<Order />} />
-
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
           <Route path="*" element={<NoMatch />} />
+          <Route path="/test" element={<Test />} />
         </Route>
         <Route path="log-in" element={<LogIn />} />
     </Routes>
