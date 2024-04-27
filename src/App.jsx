@@ -11,13 +11,14 @@ import './App.css'
 import FollowUpDetail from './Pages/FollowUpDetail';
 import Test from './Pages/Test';
 import { CafeDetail } from './Pages/CafeDetail';
+import LayoutMobile from './Layouts/LayoutMobile';
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route path="/" element={<LayoutMobile />}>
           <Route index element={<Home />} />
           <Route path="onboarding" element={<Onboarding />} />
           <Route path="follow-up" element={<FollowUp />} />

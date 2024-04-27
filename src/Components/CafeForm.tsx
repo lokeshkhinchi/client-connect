@@ -3,8 +3,10 @@ import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import styled from 'styled-components';
-import { FormContainer, Label, Input, Select, Button, ErrorMessage } from './StyledComponents';
+import { FormContainer, Label, Input, Select, Button, ErrorMessage, ButtonText } from './StyledComponents';
 import FormRow from './FormRow';
+import { TrashIcon } from '@heroicons/react/24/outline'
+
 
 const schema = yup.object().shape({
   cafeName: yup.string().required(),
@@ -51,7 +53,7 @@ const CafeForm = () => {
   };
 
   return (
-    <FormContainer className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md" onSubmit={handleSubmit(onSubmit)}>
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <h2 className="text-xl mb-4">Cafe Information</h2>
 
         <FormRow id="cafeName" label="Cafe Name" error={errors.cafeName}>
@@ -66,20 +68,29 @@ const CafeForm = () => {
       <div className="mb-4">
         <Label>Contact</Label>
         {contactFields.map((contact, index) => (
-          <div key={contact.id} className="mb-2">
-            <Input {...register(`contact.${index}.name`)} placeholder="Name" />
-            {errors?.contact?.[index]?.name && <ErrorMessage>{errors.contact[index].name.message}</ErrorMessage>}
-            <Input {...register(`contact.${index}.number`)} placeholder="Number" />
-            {errors?.contact?.[index]?.number && <ErrorMessage>{errors.contact[index].number.message}</ErrorMessage>}
-            <Select {...register(`contact.${index}.designation`)}>
-              <option value="manager">Manager</option>
-              <option value="owner">Owner</option>
-            </Select>
-            {errors?.contact?.[index]?.designation && <ErrorMessage>{errors.contact[index].designation.message}</ErrorMessage>}
-            <Button type="button" onClick={() => removeContact(index)}>Remove</Button>
+          <div key={contact.id} className="flex items-center mb-3">
+              <div className="flex-1 pr-1">
+                <Input {...register(`contact.${index}.name`)} placeholder="Name" />
+                {errors?.contact?.[index]?.name && <ErrorMessage>{errors.contact[index].name.message}</ErrorMessage>}
+              </div>
+              <div className="flex-1 px-1">
+                <Input {...register(`contact.${index}.number`)} placeholder="Number" />
+                {errors?.contact?.[index]?.number && <ErrorMessage>{errors.contact[index].number.message}</ErrorMessage>}
+              </div>
+            
+              <div className="flex-1 px-1">
+                <Select {...register(`contact.${index}.designation`)}>
+                  <option value="manager">Manager</option>
+                  <option value="owner">Owner</option>
+                </Select>
+              {errors?.contact?.[index]?.designation && <ErrorMessage>{errors.contact[index].designation.message}</ErrorMessage>}
+              </div>
+              <div className=" pl-1 text-right">
+                <ButtonText type="button" onClick={() => removeContact(index)}><TrashIcon className="h-4 w-6" aria-hidden="true" /></ButtonText>
+              </div>
           </div>
         ))}
-        <Button type="button" onClick={() => appendContact({ name: '', number: '', designation: '' })}>Add Contact</Button>
+        <ButtonText type="button" onClick={() => appendContact({ name: '', number: '', designation: '' })}>Add Contact</ButtonText>
       </div>
 
       <h2 className="text-xl mb-4">Cafe Current Ice Cream Consuming</h2>
@@ -97,20 +108,31 @@ const CafeForm = () => {
       <div className="mb-4">
         <Label>Ice Cream Variants</Label>
         {variantFields.map((variant, index) => (
-          <div key={variant.id} className="mb-2">
-            <Select {...register(`iceCreamVariants.${index}.variant`)}>
-              <option value="vanilla">Vanilla</option>
-              <option value="chocolate">Chocolate</option>
-            </Select>
-            {errors?.iceCreamVariants?.[index]?.variant && <ErrorMessage>{errors.iceCreamVariants[index].variant.message}</ErrorMessage>}
-            <Input {...register(`iceCreamVariants.${index}.quantity`)} placeholder="Quantity" type="number" />
-            {errors?.iceCreamVariants?.[index]?.quantity && <ErrorMessage>{errors.iceCreamVariants[index].quantity.message}</ErrorMessage>}
-            <Input {...register(`iceCreamVariants.${index}.price`)} placeholder="Price" type="number" />
-            {errors?.iceCreamVariants?.[index]?.price && <ErrorMessage>{errors.iceCreamVariants[index].price.message}</ErrorMessage>}
-            <Button type="button" onClick={() => removeVariant(index)}>Remove</Button>
+          <div key={variant.id} className="mb-3 flex items-center">
+              <div className="flex-1 pr-1">
+                <Select {...register(`iceCreamVariants.${index}.variant`)}>
+                  <option value="vanilla">Vanilla</option>
+                  <option value="chocolate">Chocolate</option>
+                </Select>
+                {errors?.iceCreamVariants?.[index]?.variant && <ErrorMessage>{errors.iceCreamVariants[index].variant.message}</ErrorMessage>}
+              </div>
+
+              <div className="flex-1 px-1">
+                <Input {...register(`iceCreamVariants.${index}.quantity`)} placeholder="Quantity" type="number" />
+                {errors?.iceCreamVariants?.[index]?.quantity && <ErrorMessage>{errors.iceCreamVariants[index].quantity.message}</ErrorMessage>}
+              </div>
+
+              <div className="flex-1 px-1">            
+                <Input {...register(`iceCreamVariants.${index}.price`)} placeholder="Price" type="number" />
+                {errors?.iceCreamVariants?.[index]?.price && <ErrorMessage>{errors.iceCreamVariants[index].price.message}</ErrorMessage>}
+              </div>
+
+              <div className=" pl-1">
+                <ButtonText type="button" onClick={() => removeVariant(index)}><TrashIcon className="h-4 w-6" aria-hidden="true" /></ButtonText>
+              </div>
           </div>
         ))}
-        <Button type="button" onClick={() => appendVariant({ variant: '', quantity: '', price: '' })}>Add Variant</Button>
+        <ButtonText type="button" onClick={() => appendVariant({ variant: '', quantity: '', price: '' })}>Add Variant</ButtonText>
       </div>
 
       <div className="mb-4">

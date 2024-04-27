@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { followUpHistory } from '../Data/dataCafe';
+import { contacts, followUpHistory } from '../Data/dataCafe';
 import Modal from '../Components/Modal';
+import CafeDetailHeader from '../Components/CafeDetailHeader';
+import CafeDetailContacts from '../Components/CafeDetailContacts';
+import FollowUpForm from '../Components/FollowUpForm';
 const data = [{
   id: 1,
 
@@ -28,36 +31,40 @@ function FollowUpDetail() {
 
   return (
     <>
-    <div className='cafe-info-heder'>{cafeId}</div>
+    <CafeDetailHeader />
+    <CafeDetailContacts contacts={contacts} />
+    <FollowUpForm />
     <div className='cafe-follow-up-wrap'>
       <div className='cafe-follow-up-body'></div>
-      <div className='cafe-follow-up-body'>
+      <div className='cafe-follow-up-body overflow-x-auto'>
 
-        <table>
+        <table className="w-full table-auto border-collapse border border-gray-300">
           <tr>
-            <th>S.No.</th>
-            <th>Contact Person</th>
-            <th>Reason</th>
-            <th>Sales Executive</th>
-            <th>Status</th>
+            <th className="px-4 py-2 bg-gray-200 border border-gray-300">S.No.</th>
+            <th className="px-4 py-2 bg-gray-200 border border-gray-300">Contact Person</th>
+            <th className="px-4 py-2 bg-gray-200 border border-gray-300">Reason</th>
+            <th className="px-4 py-2 bg-gray-200 border border-gray-300">Sales Executive</th>
+            <th className="px-4 py-2 bg-gray-200 border border-gray-300">Status</th>
           </tr>
 
           {followUpHistory.map((row, index) => {
             return <tr key={index+row.id}>
-             <td>{index+1}</td>
-             <td>
+             <td className="px-4 py-2 border border-gray-300">{index+1}</td>
+             <td className="px-4 py-2 border border-gray-300">
                 <div>{row?.contactPerson} ({row?.contactPersonRoll})</div>
                 <div>{row?.contactPersonNumber}</div>
                 <div>{row?.reason}</div>
              </td>
-             <td>
+             <td className="px-4 py-2 border border-gray-300">
                 <div>{row?.reason}</div>
                 {row?.comments ? <div>{row?.comments}</div> : ""}                
               </td>
-              <td>
+              <td className="px-4 py-2 border border-gray-300">
                 <div>{row?.executive}</div>
                 <div>{row?.executiveNumber}</div>
               </td>
+
+              <td className="px-4 py-2 border border-gray-300">l</td>
           </tr>
           })}
           

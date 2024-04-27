@@ -1,89 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import { ButtonText } from '../Components/StyledComponents'
+import Pagination from '../Components/Pagination'
+import { followUpList } from '../Data/dataCafe';
+import Modal from '../Components/Modal';
 
-const cafeList = [
-  {
-    id: 1,
-    cafeName: 'Cafe Name',
-    name: 'Manager Name',
-    phone: '999999999',
-    role: 'Manager',
-    locationLink: "",
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    meetTime: 'Today First Half',
-    priority: 'medium',
-  },
-  {
-    id: 1,
-    cafeName: 'Cafe Name',
-    name: 'Manager Name',
-    phone: '999999999',
-    role: 'Manager',
-    locationLink: "",
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    meetTime: 'Today First Half',
-    priority: 'medium',
-  },
-  {
-    id: 1,
-    cafeName: 'Cafe Name',
-    name: 'Manager Name',
-    phone: '999999999',
-    role: 'Manager',
-    locationLink: "",
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    meetTime: 'Today First Half',
-    priority: 'medium',
-  },
-  {
-    id: 1,
-    cafeName: 'Cafe Name',
-    name: 'Manager Name',
-    phone: '999999999',
-    role: 'Manager',
-    locationLink: "",
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    meetTime: 'Today First Half',
-    priority: 'medium',
-  }
-]
+
 function FollowUp() {
-  return (
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log('Form submitted');
+    setIsOpen(false);
+  };
+  return (<>
     <ul role="list" className="divide-y divide-gray-100">
-      {cafeList.map((cafe) => (
+      {followUpList.map((cafe) => (
         <li
           key={cafe.email}
-          className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8"
+          className="relative flex gap-x-4 justify-between gap-x-3 py-3"
         >
-          <div className="flex min-w-0 gap-x-4">
-            <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={cafe.imageUrl} alt="" />
-            <div className="min-w-0 flex-auto">
-              <p className="text-sm font-semibold leading-6 text-gray-900">
-                <a href={cafe.href}>
-                  {cafe.cafeName}
-                </a>
-              </p>
-              <p className="mt-1 flex text-xs leading-5 text-gray-500">
-                  {cafe.meetTime} : {cafe.priority}
-              </p>
-            </div>
+          <div className=" min-w-0 min-w-0 flex-auto">
+            <p className="text-sm font-semibold leading-6 text-gray-900">
+              <a href="{cafe.href}">
+                {cafe.cafeName}
+              </a>
+            </p>
+            <p className="text-sm leading-6 text-gray-900">{cafe.name} ({cafe.role})</p>
           </div>
-          <div className="flex shrink-0 items-center gap-x-4">
-            <div className="hidden sm:flex sm:flex-col sm:items-end">
-              <p className="text-sm leading-6 text-gray-900">{cafe.name} ({cafe.role})</p>
-              <p className="mt-1 text-xs leading-5 text-gray-500">
-              <a href={`mailto:${cafe.email}`} className="relative truncate hover:underline">{cafe.phone}</a>
-                </p>
-            </div>
-            <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+          <div className="flex shrink-0 flex-col items-end">
+            <p className="mt-1 flex text-xs leading-5 text-gray-500">
+              {cafe.meetTime} : {cafe.priority}
+            </p>
+            <ButtonText type="button" onClick={handleOpenModal}>Action</ButtonText>
           </div>
         </li>
       ))}
     </ul>
+    <Pagination />
+
+
+    <Modal isOpen={isOpen} onClose={handleCloseModal} title="Modal Title" onSubmit={handleSubmit}>
+      <div className="mb-4">
+        <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name</label>
+        <input type="text" id="name" className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md" required />
+      </div>
+      
+      <div className="mb-4">
+        <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
+        <input type="email" id="email" className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md" required />
+      </div>
+
+      {/* Add more form fields as children */}
+    </Modal>
+    </>
   )
 }
 
