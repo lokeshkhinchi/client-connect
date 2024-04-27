@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
-import { ButtonText } from '../Components/StyledComponents'
+import { ButtonText, Div, Span } from '../Components/StyledComponents'
 import Pagination from '../Components/Pagination'
 import { followUpList } from '../Data/dataCafe';
 import Modal from '../Components/Modal';
+import CafeDetailHeader from '../Components/CafeDetailHeader';
+import FollowUpForm from '../Components/FollowUpForm';
 
 
 function FollowUp() {
@@ -48,18 +50,8 @@ function FollowUp() {
     <Pagination />
 
 
-    <Modal isOpen={isOpen} onClose={handleCloseModal} title="Modal Title" onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name</label>
-        <input type="text" id="name" className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md" required />
-      </div>
-      
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email</label>
-        <input type="email" id="email" className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md" required />
-      </div>
-
-      {/* Add more form fields as children */}
+    <Modal isOpen={isOpen} onClose={handleCloseModal} title="Follow Up Action" onSubmit={handleSubmit}>
+      <FollowUpForm />
     </Modal>
     </>
   )

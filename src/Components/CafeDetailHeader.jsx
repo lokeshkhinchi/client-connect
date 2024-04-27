@@ -1,19 +1,16 @@
 import React from 'react'
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { ButtonText } from './StyledComponents';
 
 function CafeDetailHeader() {
   return (
     <div className="flex justify-between items-center mb-4">
-      <div>
-        <h1 className="text-3xl font-semibold">Cafe Name</h1>
-        <p className="text-gray-600">Address, Onboarding Date</p>
+      <div className="flex-1">
+        <h1 className="text-2xl font-semibold">Cafe Name</h1>
+        <p className="text-gray-600"><ButtonText type="button">Address, Onboarding Date</ButtonText></p>
       </div>
-      <div className="text-right">
-        <p>Contact Person: <span className="font-semibold">Name</span></p>
-        <p>Phone: <span className="font-semibold">Number</span></p>
-        <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-          <Link to={`/location`}>Location</Link>
-        </button>
+      <div className="text-right flex-1">
+        <p>Lokesh Khinchi</p>
+        <p className="font-semibold">+91-9999999999</p>
       </div>
     </div>
   )

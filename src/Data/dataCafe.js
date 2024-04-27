@@ -120,4 +120,6 @@ export const followUpList = [
     priority: 'medium',
   }
 ]
+
+export const orders = [1,3,1,1,1,]
   

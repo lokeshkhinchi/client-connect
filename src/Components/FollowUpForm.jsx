@@ -1,5 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { Div, Span } from './StyledComponents';
 
 const FollowUpForm = () => {
   const { register, handleSubmit, formState: { errors }, watch  } = useForm();
@@ -10,43 +11,30 @@ const FollowUpForm = () => {
   // Watching meetingStatus field for changes
   const watchMeetingStatus  = watch("meetingStatus");
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto mt-8">
-      {/* Date and Time */}
-      <div className="mb-4">
-        <label htmlFor="meetingDateTime" className="block text-gray-700">Meeting Date and Time</label>
-        <input type="datetime-local" id="meetingDateTime" {...register('meetingDateTime', { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        {errors.meetingDateTime && <span className="text-red-500">This field is required</span>}
-      </div>
+  return (<>
+    <Div className="mb-2">
+      <Span className="block text-gray-500">Representative</Span>
+      <Span className="block text-gray-900">Lokesh Khinchi (Owner)</Span>
+      <Span className="block text-gray-900">+91-999999999</Span>
+    </Div>
 
-      {/* Bande ka Naam, Roll, aur Number */}
-      <div className="mb-4">
-        <label htmlFor="personName" className="block text-gray-700">Person's Name</label>
-        <input type="text" id="personName" {...register('personName', { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        {errors.personName && <span className="text-red-500">This field is required</span>}
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="personRoll" className="block text-gray-700">Person's Roll</label>
-        <input type="text" id="personRoll" {...register('personRoll', { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        {errors.personRoll && <span className="text-red-500">This field is required</span>}
-      </div>
-
-      <div className="mb-4">
-        <label htmlFor="personNumber" className="block text-gray-700">Person's Number</label>
-        <input type="text" id="personNumber" {...register('personNumber', { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md w-full" />
-        {errors.personNumber && <span className="text-red-500">This field is required</span>}
-      </div>
+    <Div className="mb-2">
+      <Span className="block text-gray-500">Meeting Time</Span>
+      <Span className="block text-gray-900">Today First Half</Span>
+    </Div>
+    <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto mt-2">
 
       {/* Meeting Status */}
       <div className="mb-4">
         <label className="block text-gray-700">Meeting Status</label>
-        <select {...register('meetingStatus')} className="mt-1 p-2 border border-gray-300 rounded-md w-full">
+        <select {...register('meetingStatus', { required: true })} className="mt-1 p-2 border border-gray-300 rounded-md w-full">
+          <option value="">Select</option>
           <option value="askForIcecreamSample">Ask for ice cream sample</option>
           <option value="askForOrder">Ask for order</option>
           <option value="notLikeSample">Not like sample</option>
           <option value="rescheduleMeeting">Reschedule meeting</option>
         </select>
+        {errors.meetingStatus && <span className="text-red-500">This field is required</span>}
       </div>
 
       {/* Reschedule Form */}
@@ -89,6 +77,7 @@ const FollowUpForm = () => {
 
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Submit</button>
     </form>
+    </>
   );
 };
 
