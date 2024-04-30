@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
 import { Outlet } from "react-router-dom";
-import Header from './Header';
 import HeaderMobile from './HeaderMobile';
 import FooterMobile from './FooterMobile';
 

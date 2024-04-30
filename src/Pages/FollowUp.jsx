@@ -6,6 +6,7 @@ import { followUpList } from '../Data/dataCafe';
 import Modal from '../Components/Modal';
 import CafeDetailHeader from '../Components/CafeDetailHeader';
 import FollowUpForm from '../Components/FollowUpForm';
+import { Link } from 'react-router-dom';
 
 
 function FollowUp() {
@@ -25,16 +26,16 @@ function FollowUp() {
   };
   return (<>
     <ul role="list" className="divide-y divide-gray-100">
-      {followUpList.map((cafe) => (
+      {followUpList.map((cafe, index) => (
         <li
-          key={cafe.email}
+          key={`followup_list_item_${index}`}
           className="relative flex gap-x-4 justify-between gap-x-3 py-3"
         >
           <div className=" min-w-0 min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">
-              <a href="{cafe.href}">
+              <Link to="/cafe/1">
                 {cafe.cafeName}
-              </a>
+              </Link>
             </p>
             <p className="text-sm leading-6 text-gray-900">{cafe.name} ({cafe.role})</p>
           </div>

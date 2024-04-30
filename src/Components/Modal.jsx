@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, title, onSubmit, children }) => {
 
   return (
     <div className="fixed flex items-center inset-0 z-50 overflow-auto bg-black bg-opacity-50">
-      <div className="w-full relative mx-5 p-6 bg-white rounded-lg shadow-lg">
+      <div className="relative w-96 mx-auto p-6 bg-white rounded-lg shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold">{title}</h2>
           <button onClick={onClose} className="text-gray-600 hover:text-gray-800">

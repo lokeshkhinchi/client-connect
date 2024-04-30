@@ -1,65 +1,41 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
-const apiUrl = "https://jsonplaceholder.typicode.com/users";
-const itemsPerPage = 5
+const stats = [
+  { name: 'Total Subscribers', stat: '71,897' },
+  { name: 'Avg. Open Rate', stat: '58.16%' },
+  { name: 'Avg. Click Rate', stat: '24.57%' },
+]
 
 function Home() {
-  const [users, setUsers] = useState([])
-  const [currPage, setCurrPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
-  const [currPageList, setCurrPageList] = useState([])
+  return(<>
+  <h2 className="text-lg font-semibold mb-2">Important Links</h2>
+  <nav className="flex flex-1 flex-col">
+    <ul role="list" className="-mx-2 space-y-1">
+      <Link to="/cafes" className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 pl-3 text-sm leading-6 font-semibold">
+        Cafe Lists
+      </Link>
 
-  useEffect(() => {
-    setCurrPageList(users.slice((currPage-1) * itemsPerPage, currPage * itemsPerPage))
-  }, [totalPages, currPage])
+      <Link to="/onboarding" className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 pl-3 text-sm leading-6 font-semibold">
+        New Onboarding
+      </Link>
 
-  useEffect(() => {
-    setCurrPage(1)
-  }, [totalPages])
-  
-  useEffect(() => {
-    if (users.length > 0) {
-      setTotalPages(Math.ceil(users.length / itemsPerPage))
-    }
-  }, [users, currPage])
+      
+    </ul>
+  </nav>
 
-  useEffect(() => {
-    if (users.length > 0) {
-      setTotalPages(Math.ceil(users.length / itemsPerPage))
-    }
-  }, [totalPages])
-
-
-
-  const goToPage = (pageNumb=1) => {
-    setCurrPage(pageNumb)
-  }
-  
-
-  const fetchUsers = async () => {
-    const res = await fetch(apiUrl)
-    const resJson = await res.json()
-    setUsers([...resJson])
-  }
-
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-  
-
-  return (
-    <div className='w-full shadow-md'>
-      {currPageList.map((user) => <div key={`${user.id}__${user.email}`}>{user.email}</div>)}
-      <div className='pagi-wrap'>
-
-        {
-          Array.from({length: totalPages}, (_,i) => i+1).map((page, index) => (
-            <button onClick={() => goToPage(page)} className="mr-4 p-5" key={`pagi_key${index}_${page}`}>{page}</button>
-          ))
-        }
-      </div>
-    </div>
-  )
+  <div>
+    <h3 className="text-base font-semibold leading-6 text-gray-900 mt-6">Todays Info</h3>
+    <dl className="mt-3 grid grid-cols-1 gap-5">
+      {stats.map((item) => (
+        <div key={item.name} className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+          <dt className="truncate text-sm font-medium text-gray-500">{item.name}</dt>
+          <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">{item.stat}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+  </>)
 }
 
 export default Home
