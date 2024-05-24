@@ -27,7 +27,12 @@ const fetchCafeById = async (id) => {
 const fetchCafes = async () => {
   try {
     const data = await getGraphQLClient.request(GET_CAFES);
-    return data;
+    // api response dekhega toh mile 'data.cafes.data' isko simple rkhne ke liye cafes mein aajaye isliye transform krdiya yahaan
+    // just to make it readable -> bigger level data pe optimised solution nhi hai yeh
+    return data.cafes.data.map(cafe => ({
+      id: cafe.id,
+      ...cafe.attributes,
+    }));
   } catch (error) {
     console.error('Error fetching cafe:', error);
     throw error;
@@ -39,11 +44,13 @@ function Cafes() {
 
   const { token } = useContext(AuthContext);
 
-  const { data, error, isLoading } = useQuery(['cafe', 1], () => fetchCafeById(1), {
-    enabled: !!token, // Query will not execute until the token exists
-  });
+  // use this type of finding by ID
+  // const { data, error, isLoading } = useQuery(['cafe', 1], () => fetchCafeById(1), {
+  //   enabled: !!token, // Query will not execute until the token exists
+  // });
 
-  const { data:cafes, error:cafesError, isLoading:cafesIsLoading } = useQuery(['cafes'], () => fetchCafes(), {
+  // fetch list of all cafes
+  const { data:cafes = {}, error, isLoading } = useQuery(['cafes'], () => fetchCafes(), {
     enabled: !!token, // Query will not execute until the token exists
   });
 
@@ -55,7 +62,7 @@ function Cafes() {
   return (
     <>
       <ul role="list" className="grid grid-cols-1 gap-6 mb-5">
-        {orders.map((order, index) => <CafeCard key={`cafe_order_item_${order}${index}`} />)}
+        {cafes.map((cafe, index) => <CafeCard details={cafe} key={`cafe_order_item_${cafe}${index}`} />)}
       </ul>    
       <Pagination />
     </>

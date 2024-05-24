@@ -1,0 +1,39 @@
+/* src/styles/fonts.css */
+
+/* Fonseca Font */
+@font-face {
+    font-family: 'Fonseca';
+    src: url('../assets/fonts/Fonseca-Black.otf') format('otf');
+    font-weight: 900; /* Black */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Fonseca';
+    src: url('../assets/fonts/Fonseca-Medium.otf') format('otf');
+    font-weight: 500; /* Medium */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Fonseca';
+    src: url('../assets/fonts/Fonseca-Light.otf') format('otf');
+    font-weight: 300; /* Light */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Fonseca';
+    src: url('../assets/fonts/Fonseca-Regular.otf') format('otf');
+    font-weight: 400; /* Regular */
+    font-style: normal;
+  }
+  
+  /* Sweetie Summer Font */
+  @font-face {
+    font-family: 'Sweetie-Summer';
+    src: url('../assets/fonts/SweetieSummer.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
