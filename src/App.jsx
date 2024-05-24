@@ -10,25 +10,27 @@ import FollowUpDetail from './Pages/FollowUpDetail';
 import { CafeDetail } from './Pages/CafeDetail';
 import LayoutMobile from './Layouts/LayoutMobile';
 import { Cafes } from './Pages/Cafes';
+import LandingPage from "./Pages/LandingPage";
 
 function App() {
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LayoutMobile />}>
-          <Route index element={<Home />} />
-          <Route path="onboarding" element={<Onboarding />} />
-          <Route path="follow-up" element={<FollowUp />} />
-          <Route path="follow-up/:cafeId" element={<FollowUpDetail />} />
-          <Route path="cafes" element={<Cafes />} />
-          <Route path="cafe/:cafeId" element={<CafeDetail />} />
-          <Route path="order" element={<Order />} />
+          <Route index element={<LandingPage />} />
+        <Route path="/admin" element={<LayoutMobile />}>
+          <Route path="/admin" element={<Home />} />
+          <Route path="/admin/onboarding" element={<Onboarding />} />
+          <Route path="/admin/follow-up" element={<FollowUp />} />
+          <Route path="/admin/follow-up/:cafeId" element={<FollowUpDetail />} />
+          <Route path="/admin/cafes" element={<Cafes />} />
+          <Route path="/admin/cafe/:cafeId" element={<CafeDetail />} />
+          <Route path="/admin/order" element={<Order />} />
           <Route path="*" element={<NoMatch />} />
+          <Route path="/admin/log-in" element={<LogIn />} />
         </Route>
-        <Route path="log-in" element={<LogIn />} />
-    </Routes>
-  </Router>
+      </Routes>
+    </Router>
   )
 }
 

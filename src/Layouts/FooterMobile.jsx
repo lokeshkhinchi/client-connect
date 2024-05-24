@@ -5,9 +5,9 @@ import { Bars3Icon, XMarkIcon, HomeIcon, HomeModernIcon, UserGroupIcon, InboxSta
 // import { HomeIcon } from '@heroicons/react/20/solid';
 
 const navigation = [
-  { id: 1, name: 'Home', icon: <HomeIcon className="h-6 w-6" aria-hidden="true" />, href: '/' },
-  { id: 2, name: 'Follow Up', icon: <UserGroupIcon className="h-6 w-6" aria-hidden="true" />, href: '/follow-up' },
-  { id: 3, name: 'Order', icon: <InboxStackIcon className="h-6 w-6" aria-hidden="true" />, href: '/order' },
+  { id: 1, name: 'Home', icon: <HomeIcon className="h-6 w-6" aria-hidden="true" />, href: '/admin' },
+  { id: 2, name: 'Follow Up', icon: <UserGroupIcon className="h-6 w-6" aria-hidden="true" />, href: '/admin/follow-up' },
+  { id: 3, name: 'Order', icon: <InboxStackIcon className="h-6 w-6" aria-hidden="true" />, href: '/admin/order' },
 ]
 
 function FooterMobile() {
