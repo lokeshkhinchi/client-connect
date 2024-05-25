@@ -7,7 +7,7 @@ import NewFollowUpForm from '../../Components/NewFollowUpForm'
 function CafeCard({details}) {
   const [isOpen, setIsOpen] = useState(false);
   const { id, name, photo  } = details;
-  const { data: { attributes: { formats: { thumbnail: { url } } } } } = photo;
+  // const { data: { attributes: { formats: { thumbnail: { url } } } } } = photo;
 
   console.log({ details});
   const handleOpenModal = () => {
