@@ -6,10 +6,10 @@ import NewFollowUpForm from '../../Components/NewFollowUpForm'
 
 function CafeCard({details}) {
   const [isOpen, setIsOpen] = useState(false);
-  const { id, name, photo  } = details;
-  // const { data: { attributes: { formats: { thumbnail: { url } } } } } = photo;
+  const { id, name, photo, location  } = details;
+  const { data: { attributes: { formats: { thumbnail: { url } } } } } = photo;
 
-  console.log({ details});
+  console.log({ details, location });
   const handleOpenModal = () => {
     setIsOpen(true);
   };
@@ -17,10 +17,14 @@ function CafeCard({details}) {
     setIsOpen(false);
   };
 
+  const openMapUrl = () => {
+    window.open(`https://www.google.com/maps?q=${location.latitude},${location.longitude}&z=14`, '_blank');
+  }
+
   return (<>
     <li key={id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-gray-5066 shadow hover:shadow-md">
       <div className="flex w-full items-center justify-between space-x-3 p-3">
-        {/* <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={url} alt="Logo" /> */}
+        <img className="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300" src={url} alt="Logo" />
         <div className="flex-1 truncate">
           <div className="flex items-center space-x-3">
             <h3 className="truncate text-sm font-medium text-gray-900"><Link to="/cafe/1">{name}</Link></h3>
@@ -30,7 +34,8 @@ function CafeCard({details}) {
 
             <ButtonText onClick={handleOpenModal}>Follow Up</ButtonText>
           </div>
-          <p className="mt-1 truncate text-sm text-gray-500">123 Main Street, Anytown, USA 12345</p>
+          <p className="mt-1 truncate text-sm text-gray-500">{location.address}</p>
+          <ButtonText onClick={openMapUrl}>Open Map</ButtonText>
         </div>
       </div>
       <div>

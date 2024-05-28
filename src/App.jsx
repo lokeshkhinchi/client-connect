@@ -18,17 +18,17 @@ function App() {
     <Router>
       <Routes>
           <Route index element={<LandingPage />} />
-        <Route path="/admin" element={<LayoutMobile />}>
-          <Route path="/admin" element={<Home />} />
-          <Route path="/admin/onboarding" element={<Onboarding />} />
-          <Route path="/admin/follow-up" element={<FollowUp />} />
-          <Route path="/admin/follow-up/:cafeId" element={<FollowUpDetail />} />
-          <Route path="/admin/cafes" element={<Cafes />} />
-          <Route path="/admin/cafe/:cafeId" element={<CafeDetail />} />
-          <Route path="/admin/order" element={<Order />} />
+          <Route path="/admin" element={<LayoutMobile />}>
+            <Route path="/admin" element={<Home />} />
+            <Route path="/admin/onboarding" element={<Onboarding />} />
+            <Route path="/admin/follow-up" element={<FollowUp />} />
+            <Route path="/admin/follow-up/:cafeId" element={<FollowUpDetail />} />
+            <Route path="/admin/cafes" element={<Cafes />} />
+            <Route path="/admin/cafe/:cafeId" element={<CafeDetail />} />
+            <Route path="/admin/order" element={<Order />} />
+          </Route>
           <Route path="*" element={<NoMatch />} />
-          <Route path="/admin/log-in" element={<LogIn />} />
-        </Route>
+          <Route path="/login" element={<LogIn />} />
       </Routes>
     </Router>
   )

@@ -1,6 +1,35 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
+import { login } from '../Services';
+import { AuthContext } from '../context/auth';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function LogIn() {
+  const router = useNavigate();
+  const { token } = useContext(AuthContext);
+  const isAuthenticated = token || localStorage.getItem('authToken');
+
+  useEffect(() => {
+    return isAuthenticated && router('/admin');
+  }, [])
+
+
+  const { updateToken } = useContext(AuthContext)
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    login(emailRef.current.value, passwordRef.current.value)
+      .then(data => {
+        updateToken(data.jwt);
+        console.log('JWT:', data.jwt);
+        console.log('User:', data.user);
+      })
+      .catch(error => {
+        console.error('Error:', error.message);
+      });
+      
+  }
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -23,6 +52,7 @@ function LogIn() {
                 </label>
                 <div className="mt-2">
                   <input
+                    ref={emailRef}
                     id="email"
                     name="email"
                     type="email"
@@ -39,6 +69,7 @@ function LogIn() {
                 </label>
                 <div className="mt-2">
                   <input
+                    ref={passwordRef}
                     id="password"
                     name="password"
                     type="password"
@@ -57,9 +88,9 @@ function LogIn() {
                     type="checkbox"
                     className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
                   />
-                  <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
+                  {/* <label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-gray-900">
                     Remember me
-                  </label>
+                  </label> */}
                 </div>
 
                 <div className="text-sm leading-6">
@@ -70,7 +101,7 @@ function LogIn() {
               </div>
 
               <div>
-                <button
+                <button onClick={handleSubmit}
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
