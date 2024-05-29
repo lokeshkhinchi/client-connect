@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Div, Span } from './StyledComponents';
+import { Button, Div, Span } from './StyledComponents';
+import { AuthContext } from '../context/auth';
+import { createGraphQLClient } from '../apis/graphql-client';
+import { useMutation } from 'react-query';
+import { UPDATE_FOLLOWUP } from '../queries/followUps';
 
 const FollowUpForm = () => {
   const { register, handleSubmit, formState: { errors }, watch  } = useForm();
@@ -8,10 +12,42 @@ const FollowUpForm = () => {
     console.log(data); // Submitting form data, you can handle it accordingly
   };
 
+
   // Watching meetingStatus field for changes
   const watchMeetingStatus  = watch("meetingStatus");
 
+
+   // creating new follow up 
+   const { token } = useContext(AuthContext);
+   const client = createGraphQLClient(token);
+ 
+   
+   const updateMutation = useMutation(
+    ({ id, data }) => client.request(UPDATE_FOLLOWUP, { id, data }),
+     {
+       onSuccess: () => {
+         window.alert('FollowUp Updated')
+       },
+     }
+   );
+ 
+   const formData = {
+     cafe: 9,
+     isReadyForOrder: true,
+     // nextVisit: new Date(),
+     status: 'Asking_for_Sample',
+     note: 'Updating_Kindly Add Note'
+     // sample_date: new Date() || '',
+   }
+ 
+   let followUpId = 2;
+ 
+   const updateSampleFollow = () => {
+    updateMutation.mutate({ id: followUpId, data: formData });
+   }
+
   return (<>
+  <Button onClick={updateSampleFollow}> Update ID : 2 followUp</Button>
     <Div className="mb-2">
       <Span className="block text-gray-500">Representative</Span>
       <Span className="block text-gray-900">Lokesh Khinchi (Owner)</Span>

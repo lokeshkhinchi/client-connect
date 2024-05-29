@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -7,7 +7,7 @@ import { FormContainer, Label, Input, Select, Button, ErrorMessage, ButtonText }
 import FormRow from './FormRow';
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { useMutation, useQueryClient } from 'react-query';
-import { createCafe, uploadImageFile } from '../Services';
+import { createCafe, updateCafe, uploadImageFile } from '../Services';
 import { getCurrentLocation, reverseGeocode } from '../Services/utils';
 
 
@@ -130,6 +130,23 @@ const CafeForm = () => {
   };
 
 
+  const updatedCafeData = {
+    name: 'Updated Cafe Name',
+    Variant: 'Cream'
+  };
+    
+  const updateMutation = useMutation(
+    ({ id, data }) => updateCafe(id, data),
+    {
+      onSuccess: () => {
+        window.alert('Cafe updated successfully');
+      },
+    }
+  );
+
+  const updateSampleFollow = useCallback(() => {
+    updateMutation.mutate({ id: 7, data: updatedCafeData });
+  }, [updateMutation, updatedCafeData]);
 
   const onSubmit = (data) => {
     console.log({data});
@@ -144,6 +161,7 @@ const CafeForm = () => {
       </form>
 
     <Button onClick={uploadData}>Create Cafe</Button>
+    <Button onClick={updateSampleFollow}>Update Cafe</Button>
     <Button onClick={handleGetLocation}>Get Current Location</Button>
     
     // for using location feature 

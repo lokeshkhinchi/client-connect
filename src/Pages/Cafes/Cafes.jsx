@@ -7,14 +7,14 @@ import { useQuery } from 'react-query';
 
 // import { graphQLClient } from '../graphql-client';
 import { GET_CAFES, GET_CAFES_BY_ID } from '../../queries/cafe';
-import { useContext, useMemo } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { AuthContext } from '../../context/auth';
 
 import { createGraphQLClient } from '../../apis/graphql-client';
 
-const fetchCafes = async (client) => {
+const fetchCafes = async (client, limit, start) => {
   try {
-    const data = await client.request(GET_CAFES);
+    const data = await client.request(GET_CAFES, { limit, start});
     return data.cafes.data.map(cafe => ({
       id: cafe.id,
       ...cafe.attributes,
@@ -44,17 +44,21 @@ function Cafes() {
   const { token } = useContext(AuthContext);
   const client = useMemo(() => createGraphQLClient(token), [token]);
 
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+  const start = (page - 1) * pageSize;
+
+
+
   const { data: cafes, error, isLoading } = useQuery(
     ['cafes', token], 
-    () => fetchCafes(client), 
+    () => fetchCafes(client, pageSize, start), 
     {
       enabled: !!token,
       staleTime: 2000,
       cacheTime: 2000,
     }
   );
-
-  console.log({ cafes });
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

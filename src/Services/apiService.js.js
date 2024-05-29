@@ -192,3 +192,111 @@ export const createCafe = async (data) => {
   
   return responseData.data;
 };
+
+export const updateCafe = async (id, data ) => {
+  const response = await fetch(GRAPHQL_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      "authorization": "Bearer 9e613c7a1e49c0ab08acd3971f4fc7a21ed790a9121694770bc238750e0de7e20a152dfafa5516b2b28e0009e2732ada7aa08c9dc6956d4fd93aead17396ff2442e40ab04fa5b4b3451f3a3ea4c90a006edb976eac0e4b0788aa1ba796ac8eeec54411aece22e5b4b6bdc6a83892193bd4b1ae9a6a29cde0b85993f1e5df2678",
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        mutation UpdateCafe($id: ID!, $name: String, $Variant: ENUM_CAFE_VARIANT, $photo: ID, $competitor: [ComponentCompetitorBrandInput], $people: [ComponentPeopleCafesInput], $location: JSON) {
+          updateCafe(id: $id, data: { name: $name, Variant: $Variant, photo: $photo, competitor: $competitor, people: $people, location: $location }) {
+            data {
+              attributes {
+                name
+                Variant
+                photo {
+                  data {
+                    id
+                  }
+                }
+                competitor {
+                  name
+                  Expectation
+                }
+                people {
+                  name
+                  Role
+                  mobile_number
+                }
+                location
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        id,
+        ...data,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorResponse = await response.text();
+    console.error('Response error:', errorResponse);
+    throw new Error('Network response was not ok');
+  }
+
+  const responseData = await response.json();
+  if (responseData.errors) {
+    console.error('GraphQL errors:', responseData.errors);
+    throw new Error('GraphQL query error');
+  }
+  
+  return responseData.data;
+};
+export const createOrder = async (data) => {
+  const response = await fetch(GRAPHQL_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      "Authorization": "Bearer 9e613c7a1e49c0ab08acd3971f4fc7a21ed790a9121694770bc238750e0de7e20a152dfafa5516b2b28e0009e2732ada7aa08c9dc6956d4fd93aead17396ff2442e40ab04fa5b4b3451f3a3ea4c90a006edb976eac0e4b0788aa1ba796ac8eeec54411aece22e5b4b6bdc6a83892193bd4b1ae9a6a29cde0b85993f1e5df2678",
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: `
+        mutation CreateOrder($cafe : ID!, $SKU : [ComponentSkuItemsInput], $delivery_info : DateTime, $sales_person : JSON, $status : ENUM_ORDER_STATUS) {
+          createOrder(data : { cafe : $cafe, SKU : $SKU, delivery_info : $delivery_info, sales_person : $sales_person, status : $status }) {
+            data {
+              attributes {
+                cafe {
+                  data {
+                    id
+                  }
+                }
+                sales_person
+                delivery_info
+                status
+                SKU {
+                  flavour
+                  quantity
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        ...data
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    const errorResponse = await response.text();
+    console.error('Response error:', errorResponse);
+    throw new Error('Network response was not ok');
+  }
+
+  const responseData = await response.json();
+  if (responseData.errors) {
+    console.error('GraphQL errors:', responseData.errors);
+    throw new Error('GraphQL query error');
+  }
+  
+  return responseData.data;
+}; 
+

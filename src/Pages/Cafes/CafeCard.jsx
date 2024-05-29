@@ -46,7 +46,7 @@ function CafeCard({details}) {
     </li>
 
     {isOpen && <Modal isOpen={isOpen} onClose={handleCloseModal} title="Follow Up Action">
-      <NewFollowUpForm />
+      <NewFollowUpForm cafe={details} />
     </Modal>}
     </>
   )

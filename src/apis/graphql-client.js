@@ -8,11 +8,15 @@ export const setToken = (newToken) => {
   token = newToken;
 };
 
+export const removeToken = () => {
+  token = null;
+};
 
 export const createGraphQLClient = (token) => {
   return new GraphQLClient(endpoint, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     },
   });
 };

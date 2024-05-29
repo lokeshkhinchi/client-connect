@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { createGraphQLClient } from '../apis/graphql-client';
+import { AuthContext } from '../context/auth';
+import { useMutation } from 'react-query';
+import { CREATE_FOLLOWUP } from '../queries/followUps';
+import { Button } from './StyledComponents';
 
-const NewFollowUpForm = () => {
+const NewFollowUpForm = ({ cafe }) => {
   const { register, handleSubmit, formState: { errors }, watch  } = useForm();
   const onSubmit = (data) => {
     console.log(data); // Submitting form data, you can handle it accordingly
   };
+  // creating new follow up 
+  const { token } = useContext(AuthContext);
+  const client = createGraphQLClient(token);
+
+  
+  const createMutation = useMutation(
+    (data) => client.request(CREATE_FOLLOWUP, { ...data }),
+    {
+      onSuccess: () => {
+        window.alert('FollowUp Crated')
+      },
+    }
+  );
+
+  const formData = {
+    cafe: cafe?.id || '',
+    // isReadyForOrder: true,
+    // nextVisit: new Date(),
+    status: 'Asking_for_Sample',
+    note: 'Kindly Add Note'
+    // sample_date: new Date() || '',
+  }
+
+
+  const createSampleFollow = () => {
+    createMutation.mutate({ data: formData });
+  }
+
+
 
   return (<>
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg mx-auto mt-2">
+      <Button onClick={createSampleFollow}>Create Sample FollowUp</Button>
 
       <div className="mb-4">
         <label htmlFor="nextMeetingDate" className="block text-gray-700">Next Meeting Date</label>

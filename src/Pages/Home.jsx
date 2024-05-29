@@ -12,6 +12,10 @@ function Home() {
   <h2 className="text-lg font-semibold mb-2">Important Links</h2>
   <nav className="flex flex-1 flex-col">
     <ul role="list" className="-mx-2 space-y-1">
+    <Link to="/admin/cart" className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 pl-3 text-sm leading-6 font-semibold">
+        Create Order
+      </Link>
+
       <Link to="/admin/cafes" className="text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 pl-3 text-sm leading-6 font-semibold">
         Cafe Lists
       </Link>
